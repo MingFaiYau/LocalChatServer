@@ -8,6 +8,11 @@ interface User {
   chatRoomIds: string[]
 }
 
+interface MaskedUser {
+  id: string
+  name: string
+}
+
 interface ChatRoom {
   id: string
   createdDate: string
@@ -20,7 +25,8 @@ interface Message {
   text: string
   type: MessageType
   createdDate: string
-  user: User
+  userId: string
+  user?: MaskedUser
   chatRoomId: string
 }
 

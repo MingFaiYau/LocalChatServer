@@ -129,7 +129,7 @@ app.get(
     if (!chatRoom.userIds.includes(req.customUserId))
       return res.status(403).json({ code: 403, message: 'No Permission' })
 
-    const messages = findMessagesByChatRoomId(chatRoom.id)
+    const messages = findMessagesByChatRoomId(chatRoom)
     successResponse(res, messages)
   }
 )
@@ -141,6 +141,14 @@ app.post('/message/:chatRoomId', isAuthMiddleware, async (req, res) => {
   const chatRoomId = req.params.chatRoomId
   if (!chatRoomId) {
     return invalidRequest(res, 'Invalid chat room')
+  }
+  const chatRoom = findChatRoomById(chatRoomId)
+  if (!chatRoom) {
+    return res.status(500).json({ code: 500, message: 'Internal error' })
+  }
+
+  if (!chatRoom.userIds.includes(req.customUserId)) {
+    return res.status(403).json({ code: 403, message: 'No Permission' })
   }
   const input = req.body as MessageInput
   if (!input.text) {

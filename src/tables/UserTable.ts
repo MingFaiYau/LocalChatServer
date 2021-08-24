@@ -3,6 +3,13 @@ import { API_FAKE_TIMEOUT } from '..'
 
 const userTable: UserTable = {}
 
+export const maskedUser = (user: User): MaskedUser => {
+  return {
+    id: user.id,
+    name: user.name
+  }
+}
+
 export const userJoinChatRoom = (userId: string, chatRoomId: string) => {
   userTable[userId].chatRoomIds.push(chatRoomId)
 }

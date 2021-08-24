@@ -18,8 +18,10 @@ export const isAuthMiddleware: MiddlewareFunc = (req, res, next) => {
         req.customUserId = userId as string
         next()
       } else {
-        res.status(403).json({ code: 403, message: 'Invalid call' })
+        res.status(403).json({ code: 403, message: 'No Permission' })
       }
     })
+  } else {
+    res.status(403).json({ code: 403, message: 'No Permission' })
   }
 }
