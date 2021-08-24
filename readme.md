@@ -161,6 +161,43 @@ Response
 }
 ```
 
+## Join ChatRoom
+
+Join chatroom by chatRoomId
+
+> `http://localhost:3001/chatRoom/${chatRoomId}/join`
+
+Method : POST
+
+Header :
+
+Content-Type : application/json
+
+Authorization : `Bearer ${accessToken}`
+
+Body
+
+```
+{}
+```
+
+Response
+
+```
+{
+    "code": 200,
+    "message": "success",
+    "body": {
+        "id": "68e85f69-b438-4ee1-81a9-e1474d7a4b5a",
+        "createdDate": "2021-08-24T05:56:46.994Z",
+        "userIds": [
+            "a6c78333-6646-42ea-9431-fa49f4bd7506",
+            "69788034-c720-4c7f-8419-f33bf8434307"
+        ]
+    }
+}
+```
+
 ## Fetch ChatRoom
 
 Get user's chatroom

@@ -106,9 +106,16 @@ app.post('/chatRoom/:chatRoomId/join', isAuthMiddleware, async (req, res) => {
     return invalidRequest(res, 'Invalid chat room')
   }
   const chatRoom = findChatRoomById(chatRoomId)
-  if (!chatRoom.userIds.includes(req.customUserId))
-    joinChatRoom(req.customUserId, chatRoomId)
-  successResponse(res)
+  if (!chatRoom) {
+    return invalidRequest(res, 'Invalid chat room')
+  }
+  if (chatRoom.userIds.includes(req.customUserId))
+    return res
+      .status(200)
+      .json({ code: 200, message: 'Already Joined', body: chatRoom })
+
+  joinChatRoom(req.customUserId, chatRoomId)
+  successResponse(res, chatRoom)
 })
 
 /*
@@ -124,7 +131,7 @@ app.get(
     }
     const chatRoom = findChatRoomById(chatRoomId)
     if (!chatRoom) {
-      return res.status(500).json({ code: 500, message: 'Internal error' })
+      return invalidRequest(res, 'Invalid chat room')
     }
     if (!chatRoom.userIds.includes(req.customUserId))
       return res.status(403).json({ code: 403, message: 'No Permission' })
@@ -144,7 +151,7 @@ app.post('/message/:chatRoomId', isAuthMiddleware, async (req, res) => {
   }
   const chatRoom = findChatRoomById(chatRoomId)
   if (!chatRoom) {
-    return res.status(500).json({ code: 500, message: 'Internal error' })
+    return invalidRequest(res, 'Invalid chat room')
   }
 
   if (!chatRoom.userIds.includes(req.customUserId)) {
