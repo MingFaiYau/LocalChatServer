@@ -283,7 +283,7 @@ Response
 
 Fetch message in chatroom
 
-> `http://localhost:3001/${chatRoomId}/messages`
+> `http://localhost:3001/chatRoom/${chatRoomId}/messages`
 
 Method : GET
 
