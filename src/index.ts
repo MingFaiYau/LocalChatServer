@@ -16,6 +16,7 @@ import {
 } from './tables/UserTable'
 import { createJWTToken } from './until/jwt'
 import { createMessage, findMessagesByChatRoomId } from './tables/MessageTable'
+import cors from 'cors'
 
 export const API_FAKE_TIMEOUT = 1 * 1000
 const PORT = 3001
@@ -30,12 +31,24 @@ const errorHandlerFunc: express.ErrorRequestHandler = (err, req, res, next) => {
 }
 
 const app = express()
+app.use(
+  cors({
+    origin: '*' // ['http://localhost:3002']
+  })
+)
 app.use(express.json())
 app.use(
   express.urlencoded({
     extended: true
   })
 )
+
+/*
+  Health check
+*/
+app.get('/healthCheck', async (req, res) => {
+  successResponse(res)
+})
 
 /*
   Register
