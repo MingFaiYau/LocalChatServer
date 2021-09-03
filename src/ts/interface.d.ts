@@ -44,6 +44,8 @@ interface MessageTable {
 
 interface JWTToken {
   id: string
+  userName: string
+  session: string
 }
 
 type UserType = 'User' | 'Admin' | 'System'

@@ -7,14 +7,14 @@ import {
 import { invalidRequest, successResponse } from './responses/index'
 import express from 'express'
 import http from 'http'
-import { isAuthMiddleware } from './middlewares'
+import { isAuthMiddleware, isRefreshMiddleware } from './middlewares'
 import {
   createUser,
   findUserByNamePwd,
   isUserExistByName,
   findUserById
 } from './tables/UserTable'
-import { createJWTToken } from './until/jwt'
+import { createJWTToken, removeSession } from './until/jwt'
 import { createMessage, findMessagesByChatRoomId } from './tables/MessageTable'
 import cors from 'cors'
 
@@ -81,8 +81,28 @@ app.post('/login', async (req, res) => {
 
   const user = findUserByNamePwd(input.name, input.password)
   if (!user) return res.status(401).json({ code: 401, message: 'fail' })
-  const jwtToken = createJWTToken(user.id)
-  successResponse(res, { accessToken: jwtToken })
+  const jwtToken = createJWTToken(user.id, user.name)
+  successResponse(res, { ...jwtToken })
+})
+
+/*
+  refreshToken
+*/
+app.post('/refreshToken', isRefreshMiddleware, async (req, res) => {
+  const user = findUserById(req.customUserId)
+  if (!user) return res.status(401).json({ code: 401, message: 'fail' })
+  const jwtToken = createJWTToken(user.id, user.name)
+  successResponse(res, { ...jwtToken })
+})
+
+/*
+  Fetch ChatRoom
+*/
+app.post('/logout', isAuthMiddleware, async (req, res) => {
+  const user = findUserById(req.customUserId)
+  if (!user) return res.status(401).json({ code: 401, message: 'fail' })
+  removeSession(req.customSession)
+  successResponse(res)
 })
 
 /*
