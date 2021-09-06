@@ -83,7 +83,74 @@ Response
     "code": 200,
     "message": "success",
     "body": {
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkYjU3YjQwLTcyYjEtNDJmYy1iNWVlLTk5NjMzMDJmNWY2YyIsImlhdCI6MTYyOTc3MjUwM30.bCRgLAcA-Ilvfp2U32jsApcgKNM28bgcY8vjLno13Q0"
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4MjUyNWZiLWNjM2QtNGExYi1hMzQ4LWMwN2ExOTk0OTc0NiIsInVzZXJOYW1lIjoibmFtZSIsInNlc3Npb24iOiJlZTY3MzY0OS05YWZiLTRmYjItOTg5Mi05MDI0NGQ4YmJmYWQiLCJpYXQiOjE2MzA5MTk0MTEsImV4cCI6MTYzMDkxOTQxNn0.O-YlcEjmiNwfZML0I0sPX06kRFpaFK7rYuq_r2unm94",
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4MjUyNWZiLWNjM2QtNGExYi1hMzQ4LWMwN2ExOTk0OTc0NiIsInVzZXJOYW1lIjoibmFtZSIsInNlc3Npb24iOiJlZTY3MzY0OS05YWZiLTRmYjItOTg5Mi05MDI0NGQ4YmJmYWQiLCJpYXQiOjE2MzA5MTk0MTEsImV4cCI6MTYzMTUyNDIxMX0.oZbygd1WIdWuCPdA9DcD16OnW0D__gRB3ZAqKvXv9OA"
+    }
+}
+```
+
+## Logout
+
+Logout api will revoke the refresh token
+
+https://jwt.io/
+
+https://github.com/auth0/node-jsonwebtoken
+
+> `http://localhost:3001/login`
+
+Method : POST
+
+Header :
+
+Content-Type : application/json
+
+Body
+
+```
+{}
+```
+
+Response
+
+```
+{
+    "code": 200,
+    "message": "success"
+}
+```
+
+## RefreshToken
+
+Refresh the expired access token
+
+> `http://localhost:3001/refreshToken`
+
+Method : POST
+
+Header :
+
+Content-Type : application/json
+
+Authorization : `Bearer ${accessToken}`
+
+Body
+
+```
+{
+    "refreshToken": ${refreshToken}
+}
+```
+
+Response
+
+```
+{
+    "code": 200,
+    "message": "success",
+    "body": {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4MjUyNWZiLWNjM2QtNGExYi1hMzQ4LWMwN2ExOTk0OTc0NiIsInVzZXJOYW1lIjoibmFtZSIsInNlc3Npb24iOiJkM2JlZjU1NS04NzVkLTQ4ZTEtYWNmNi1jZWU4MDA0M2QwMzUiLCJpYXQiOjE2MzA5MTk0OTMsImV4cCI6MTYzMDkxOTQ5OH0.hMGsnxNdSiutt8PsOXpWgwc29KpqzO9BDXG4qyr8TTc",
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4MjUyNWZiLWNjM2QtNGExYi1hMzQ4LWMwN2ExOTk0OTc0NiIsInVzZXJOYW1lIjoibmFtZSIsInNlc3Npb24iOiJkM2JlZjU1NS04NzVkLTQ4ZTEtYWNmNi1jZWU4MDA0M2QwMzUiLCJpYXQiOjE2MzA5MTk0OTMsImV4cCI6MTYzMTUyNDI5M30.h_bXzwXyLa7-av7UFjUj0K2gQOsgRaGmCmm3VnbdDV8"
     }
 }
 ```

@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 const ACCESS_TOKEN_SECRET = 'ACCESS_TOKEN_SECRET'
 const REFRESH_TOKEN_SECRET = 'REFRESH_TOKEN_SECRET'
 
-const ACCESS_TOKEN_EXPIRES_IN = 5
-const REFRESH_TOKEN_EXPIRES_IN = '7d'
+const ACCESS_TOKEN_EXPIRES_IN = 60 * 5 // 5 mins
+const REFRESH_TOKEN_EXPIRES_IN = '7d' // 7 days
 
 const sessions: { [key: string]: string } = {}
 
